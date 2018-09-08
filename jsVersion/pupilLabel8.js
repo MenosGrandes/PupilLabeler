@@ -65,7 +65,6 @@ strokeControl.oninput = function () {
 
 function updateControls() {
 	strokeControl.value = ellipse.strokeWidth;
-        console.log(ellipse.getScaledWidth());
 
 }
 
@@ -87,7 +86,7 @@ var bbox = ellipse.getBoundingRect(true,true);
 
 var jsonObject = {"name":currentImageName,"left":ellipse.left, "top":ellipse.top, "width":ellipse.getScaledWidth(), "height":ellipse.getScaledHeight(),"scaleX":ellipse.zoomX,"scaleY":ellipse.zoomY,"rx":ellipse.rx,"ry":ellipse.ry};
 jQuery.post("json.php",{json : JSON.stringify(jsonObject)},function(data) {
-    console.log(data);
+    
 }
 );
 
@@ -95,10 +94,6 @@ jQuery.post("json.php",{json : JSON.stringify(jsonObject)},function(data) {
 }
 function updateEllipse(ellipseData)
 {
-    
-    console.log(ellipseData);
-    console.log("PRZED");
-    console.log(ellipse);
    canvas.remove(ellipse);
     
     ellipse = new fabric.Ellipse({
@@ -121,9 +116,9 @@ function updateEllipse(ellipseData)
 	});
     ellipse.calcCoords();
 canvas.add(ellipse);
-console.log("update");
-console.log(ellipse);
 ellipse.scaleToWidth(ellipseData["width"]);
+ellipse.scaleToHeight(ellipseData["height"]);
+
 //ellipse.set({left:ellipseData["left"] ,height: ellipseData["height"], top: ellipseData["top"], width: ellipseData["width"], selectable : true});
 
 }
