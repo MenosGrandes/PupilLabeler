@@ -1,21 +1,24 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<script src="fabric.min.js"></script>
-	
-	</head>
-	<body>
-	
-		<canvas id="c"></canvas>
+    <head>
+        <script src="fabric.min.js"></script>
+    </head>
+    <body>
 
-		<div class="controls">
-<p>
-<label><span>Ellipse stroke</span> <input type="range" id="stroke-control" value="0.01" min="0.01" max="2" step="0.01"></label>
-</p>
-	</div>
+        <canvas id="c"></canvas>
 
-		<script src="pupilLabel.js"></script>
+        <div class="controls">
+            <p>
+                <label>
+                <span>Ellipse stroke</span> 
+                <input type="range" id="stroke-control" value="0.01" min="0.01" max="2" step="0.01"></label>
+                </p>
+                <p>
+                    <button onclick="saveToJson()">Save to JSON</button> 
+            </p>
+        </div>
 
-	</body>
-</html>
+        <script src="pupilLabel.js"></script>
 
+    </body>
+</html>    
