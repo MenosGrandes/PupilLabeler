@@ -65,7 +65,8 @@ strokeControl.oninput = function () {
 
 function updateControls() {
 	strokeControl.value = ellipse.strokeWidth;
-    console.log(ellipse.aCoords.tl);
+        console.log(ellipse.getScaledWidth());
+
 }
 
 canvas.on({
@@ -82,9 +83,9 @@ jQuery.ajax({url: "getImages.php"}).done(function( html ) {
 }
 function saveToJson()
 {
-var bbox = ellipse.getBoundingRect();
+var bbox = ellipse.getBoundingRect(true,true);
 
-var jsonObject = {"name":currentImageName,"left":bbox.left, "top":bbox.top, "width":bbox.width, "height":bbox.height};
+var jsonObject = {"name":currentImageName,"left":ellipse.left, "top":ellipse.top, "width":ellipse.getScaledWidth(), "height":ellipse.getScaledHeight(),"scaleX":ellipse.zoomX,"scaleY":ellipse.zoomY,"rx":ellipse.rx,"ry":ellipse.ry};
 jQuery.post("json.php",{json : JSON.stringify(jsonObject)},function(data) {
     console.log(data);
 }
@@ -95,27 +96,34 @@ jQuery.post("json.php",{json : JSON.stringify(jsonObject)},function(data) {
 function updateEllipse(ellipseData)
 {
     
+    console.log(ellipseData);
+    console.log("PRZED");
+    console.log(ellipse);
    canvas.remove(ellipse);
     
     ellipse = new fabric.Ellipse({
 		left: ellipseData["left"],
 		top: ellipseData["top"],
-        width: ellipseData["width"],
-        height: ellipseData["height"],
+        width: (ellipseData["width"] * ellipseData["scaleX"]),
+        height: (ellipseData["height"] * ellipseData["scaleY"]) ,
 		stroke: 'blue',
 		fill: 'rgba(0,0,0,0)',
 		selectable: true,
 		originX: 'center',
 		originY: 'center',
-		rx: 50,
-		ry: 50,
+		rx: ellipseData["rx"],
+		ry: ellipseData["ry"],
 		cornerColor: 'green',
-		cornerSize: 5
+		cornerSize: 5,
+        zoomX: ellipseData["scaleX"],
+        zoomY: ellipseData["scaleY"],
 
 	});
+    ellipse.calcCoords();
 canvas.add(ellipse);
 console.log("update");
-console.log(ellipseData);
+console.log(ellipse);
+ellipse.scaleToWidth(ellipseData["width"]);
 //ellipse.set({left:ellipseData["left"] ,height: ellipseData["height"], top: ellipseData["top"], width: ellipseData["width"], selectable : true});
 
 }

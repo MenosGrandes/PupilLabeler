@@ -27,6 +27,10 @@ foreach($decodedFile as &$item )
       $item["top"] =   $decodedPost["top"];
       $item["width"] =$decodedPost["width"];
       $item["height"]= $decodedPost["height"];
+      $item["scaleX"]= $decodedPost["scaleX"];
+      $item["scaleY"]= $decodedPost["scaleY"];
+      $item["rx"]= $decodedPost["rx"];
+      $item["ry"]= $decodedPost["ry"];
 
       $alreadyInFile = True;
       break;
